@@ -15,6 +15,6 @@ class EmployeeForm(forms.ModelForm):
     
     def clean_name(self):
         name = self.cleaned_data['name']
-        if not name.replace(' ', '').isalnum():
-            raise forms.ValidationError("Name must contain only letters and spaces.")
+        if not name.replace(' ', '').isalpha():
+            raise forms.ValidationError("Name must contain only letters.")
         return name
