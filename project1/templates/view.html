@@ -1,0 +1,85 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="badd">
+    <div class="container-fluid c2">
+        <div><h4>VIEW AN EMPLOYEE</h4></div>
+        <div class="container form1 mt-5">
+            <form method="post" enctype="multipart/form-data" id="viewForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_name" class="form-label">Name</label>
+                    <input type="text" name="name" id="id_name" class="form-control">
+                </div>
+                {% if error_message %}
+                    <div class="alert alert-danger">
+                        {{ error_message }}
+                    </div>
+                {% endif %}
+                
+                <button type="submit" class="btn btn-dark" >Search</button>
+                {% if employee %}
+                    <button type="button" class="btn btn-light" onclick="openModal()">View</button>
+                {% endif %}
+            </form>
+            <div class="button-container mt-2 d-flex justify-content-end">
+                <a href="/" class="btn btn-outline-light">Go to home</a>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} ---------------------------modal--------------------------------------------------- {% endcomment %}
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light"> 
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Employee Details : </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  {% if employee %}
+                    <p>Name : {{ employee.name }}</p>
+                    <p>Age : {{ employee.age }}</p>
+                    <p>Department : {{ employee.department }}</p>
+                    
+                  {% else %}
+                    <p>{{ error_message }}</p>
+                  {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" onclick="redirectToHome()" data-bs-dismiss="modal">Go to home</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    {% comment %} ---------------------------endofmodal----------------------------------------------- {% endcomment %}
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyFroL8tSk3bqVZx7S/3z5xCfSnwtx0Og0" crossorigin="anonymous"></script>
+
+    <script>
+
+        function openModal() {
+            var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+            myModal.show();
+        }
+
+        function redirectToHome() {
+            window.location.href = '/';  
+        }
+
+    </script>
+</body>
+</html>
