@@ -13,10 +13,10 @@ Setup
 
 
 Clone the repository:
-git clone https://github.com/Swetha-ep/Project-Employee.git
+git clone https://github.com/Swetha-ep/employe-management.git
 
 Navigate to the project directory:
-cd Project-Employee
+cd employe-management
 
 
 Create and activate a virtual environment:
